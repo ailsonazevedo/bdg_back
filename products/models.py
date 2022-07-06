@@ -21,7 +21,7 @@ class Products(BaseModel):
     description = models.TextField('Descrição:')
     price = models.DecimalField('Preço:', max_digits=10, decimal_places=2)
     image = models.ImageField('Imagem:', upload_to='media/products', null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, related_name='categories')
+    categoria = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, related_name='categories')
     
     def __str__(self):
         return self.name
