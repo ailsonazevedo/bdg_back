@@ -16,10 +16,20 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.db import router
+from django.urls import include, path
+from products import views
+import products
+
+
+
+# route = router.DefaultRouter()
+# route.register(r'produtos', ProductViewsets, basename = 'Products')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('/products', include(route.urls),name='produtos')
+
 ]
 if settings.DEBUG:
    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)
