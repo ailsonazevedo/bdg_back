@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ordered, Products, Category
+from .models import Products, Category
 
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
@@ -30,17 +30,5 @@ class CategoryAdmin(admin.ModelAdmin):
     class Meta:
         model = Category
 
-@admin.register(Ordered)
-class OrderedAdmin(admin.ModelAdmin):
-    list_display = ('products', 'quantity', 'price', 'total')
-    list_filter = ('product', 'quantity', 'price')
-    search_fields = ('product', 'quantity', 'price', 'total')
-    # ordering = ('product', 'quantity', 'price', 'total')
-    fieldsets = (
-        ('Ordered', {
-            'fields': ('product', 'quantity', 'price', 'total')
-        }),
-    )
-    class Meta:
-        model = Ordered
+
 # Register your models here.

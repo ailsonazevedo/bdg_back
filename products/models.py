@@ -1,5 +1,5 @@
 from django.db import models
-
+# Create your models here.
 
 def upload_image(instance, filename):
     return f"{instance.id}-{filename}"
@@ -42,22 +42,3 @@ class Products(BaseModel):
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
         ordering = ('name',)
-
-class Ordered(BaseModel):
-    product = models.ManyToManyField(Products, related_name='items')
-    quantity = models.IntegerField('Quantidade:', default=1)        
-    price = models.DecimalField('Preço:', max_digits=9, decimal_places=2)
-    total = models.DecimalField('Preço Total:', max_digits=10, decimal_places=2)
-
-    def __str__(self):
-        return self.id
-
-    # def total(self):
-    #     return self.product.price * self.quantity
-
-    class Meta:
-        verbose_name = 'Ordered'
-        verbose_name_plural = 'Ordered'
-        ordering = ('-created_at',)
-        
-# Create your models here.
