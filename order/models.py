@@ -1,25 +1,35 @@
 from django.db import models
 from products.models import BaseModel, Products
 # Create your models here.
+class Region(models.Model):
+    name = models.CharField('Nome da Região:', max_length=80)
+    shipping_price = models.DecimalField('Preço do Frete:', max_digits=10, decimal_places=2)
+
+    class Meta:
+        ordering = ['-name',]
+    
+    def __str__(self):
+        return self.name
 
 class Order(BaseModel):
-    #user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    zipcode = models.CharField(max_length=100)
-    place = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
+    #user = models.ForeignKey("account.Profile", related_name='orders', on_delete=models.CASCADE)
+    #first_name = models.CharField(max_length=100)
+    #last_name = models.CharField(max_length=100)
+    #email = models.CharField(max_length=100)
+    address = models.CharField('Endereço:', max_length=100, default='')
+    zipcode = models.CharField('CEP:', max_length=100, default='')
+    number = models.CharField('Número:',max_length=50, default='')
+    district = models.CharField('Bairro:', max_length=100, default='')
+    complement = models.CharField('Complemento:', max_length=100, null=True, blank=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, default='')
+    #phone = models.CharField(max_length=100)
 
     class Meta:
         ordering = ['-created_at',]
     
     def __str__(self):
-        return self.first_name
+        return self.address
 
-    def full_name(self):
-        return self.first_name + ' ' + self.last_name
 
 
 
