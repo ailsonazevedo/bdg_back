@@ -13,3 +13,10 @@ class ProductsListView(APIView):
         return Response(serializer.data)
 # Create your views here.
 
+class CategoryListView(APIView):
+    def get(self, request):
+        category = Category.objects.all()
+        serializer = CategorySerializer(category, many=True)
+        return Response(serializer.data)
+
+
