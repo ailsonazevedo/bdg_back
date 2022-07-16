@@ -38,16 +38,12 @@ schema_view = get_schema_view(
    permission_classes=[permissions.IsAdminUser,]
 )
 
-full_urls = [
-    path('api/v1/', include('products.urls')),
-    path('api/v1/', include('order.urls')),
-]
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('', include(full_urls)),
-    path('', include(full_urls)),
-
+    path('api/v1/', include('products.urls')),
+    path('api/v1/', include('order.urls')),
 
     path('auth/', include('rest_framework.urls')),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
