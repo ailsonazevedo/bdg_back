@@ -1,15 +1,15 @@
 from django.contrib import admin
-from .models import Order, OrderItem, Region
+from .models import Order, OrderItem, Region, Payment
 # Register your models here.
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('order', 'product', 'quantity', 'price', 'status', 'created_at')
-    list_filter = ('order', 'product', 'quantity', 'price', 'status', 'created_at')
-    search_fields = ('order', 'product', 'quantity', 'price', 'status', 'created_at')
+    list_display = ('product', 'quantity', 'price', 'created_at')
+    list_filter = ('product', 'quantity', 'price', 'created_at')
+    search_fields = ('product', 'quantity', 'price', 'created_at')
 
     fieldsets = (
         ('OrderItem', {
-            'fields': ('order', 'product', 'quantity', 'price', 'status')
+            'fields': ('product', 'quantity', 'price')
         }),
     )
     class Meta:
@@ -17,12 +17,20 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('address', 'zipcode', 'number', 'district', 'complement', 'region')
-    list_filter = ('address', 'zipcode', 'number', 'district', 'complement', 'region')
-    search_fields = ('address', 'zipcode', 'number', 'district', 'complement', 'region')
+    list_display = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'phone', 'status', 'get_order_items')
+    list_filter = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'phone', 'status')
+    search_fields = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'phone', 'status')
+
+    
 
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
     list_display = ('name', 'shipping_price',)
     list_filter = ('name', 'shipping_price',)
     search_fields = ('name', 'shipping_price',)
+
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('name','description')
+    list_filter = ('name', 'description')
+    search_fields = ('name', 'description')

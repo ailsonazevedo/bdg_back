@@ -1,61 +1,24 @@
 from rest_framework import serializers
 
-from ..models import Order, OrderItem
-
-from products.api.serializers import ProductSerializer
-
-class MyOrderItemSerializer(serializers.ModelSerializer):    
-    product = ProductSerializer()
-
-    class Meta:
-        model = OrderItem
-        fields = (
-            "price",
-            "product",
-            "quantity",
-        )
-
-class MyOrderSerializer(serializers.ModelSerializer):
-    items = MyOrderItemSerializer(many=True)
-
-    class Meta:
-        model = Order
-        fields = (
-            "id",
-            "first_name",
-            "last_name",
-            "email",
-            "address",
-            "zipcode",
-            "place",
-            "phone",
-            "items",
-        )
-
-class OrderItemSerializer(serializers.ModelSerializer):    
-    class Meta:
-        model = OrderItem
-        fields = (
-            "price",
-            "product",
-            "quantity",
-            "created_at",
-            "status",
-        )
+from ..models import Order, OrderItem, Payment, Region
 
 class OrderSerializer(serializers.ModelSerializer):
-    items = OrderItemSerializer(many=True)
-
+    #order_items = serializers.ListSerializer(many=False, queryset=OrderItem.objects.all())
     class Meta:
         model = Order
-        fields = (
-            "id",
-            "first_name",
-            "last_name",
-            "email",
-            "address",
-            "zipcode",
-            "place",
-            "phone",
-            "items",
-        )
+        fields = ['id', 'full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'phone', 'status', 'get_status_choices', 'get_order_items']
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = '__all__'
+
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
+        fields = '__all__'
