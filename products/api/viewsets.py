@@ -1,22 +1,27 @@
-from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import viewsets
-from products.models import Products, Category
-from products.api.serializers import ProductSerializer, CategorySerializer
+from collections import _OrderedDictItemsView
+from typing import OrderedDict
+from django.http import response
+from rest_framework.exceptions import NotFound
+from ..models import *
+from .serializers import *
 
-class ProductsListView(APIView):
-    def get(self, request):
-        products = Products.objects.all()
-        serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
+from rest_framework import status
+from rest_framework import viewsets, permissions
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.exceptions import NotFound
+from rest_framework.response import Response
+
 # Create your views here.
 
-class CategoryListView(APIView):
-    def get(self, request):
-        category = Category.objects.all()
-        serializer = CategorySerializer(category, many=True)
-        return Response(serializer.data)
+class ProductsViewsets(viewsets.ModelViewSet):
+    
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)  
+
+class CategoryViewsets(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 

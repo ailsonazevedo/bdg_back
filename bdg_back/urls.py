@@ -16,17 +16,13 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from rest_framework import routers
 from django.urls import path, include, re_path
+from rest_framework import routers
 
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-
-
-from products.api.viewsets import ProductsListView
-
 
 
 schema_view = get_schema_view(
@@ -42,15 +38,16 @@ schema_view = get_schema_view(
    permission_classes=[permissions.IsAdminUser,]
 )
 
-route = routers.DefaultRouter()
-
-route.register(r'products', ProductsListView, basename='Produtos')
+full_urls = [
+    path('api/v1/', include('products.urls')),
+    path('api/v1/', include('order.urls')),
+]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('products.urls')),
-    path('api/v1/', include('products.urls')),
-     path('api/v1/', include('order.urls')),
+    #path('', include(full_urls)),
+    path('', include(full_urls)),
+
 
     path('auth/', include('rest_framework.urls')),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
