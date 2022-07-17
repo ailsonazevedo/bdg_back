@@ -14,7 +14,7 @@ class RegionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(many=False, read_only=True)
+    #product = ProductSerializer(many=False, read_only=True)
     class Meta:
         model = OrderItem
         fields = ['id', 'product', 'quantity', 'price', 'created_at']
