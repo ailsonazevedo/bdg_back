@@ -17,9 +17,9 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'phone', 'status', 'get_order_items')
-    list_filter = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'phone', 'status')
-    search_fields = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'phone', 'status')
+    list_display = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'payment', 'phone', 'status', 'get_order_items')
+    list_filter = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'payment', 'phone', 'status')
+    search_fields = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'payment', 'phone', 'status')
 
     
 

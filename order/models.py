@@ -18,6 +18,10 @@ class Payment(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Payment'
+        verbose_name_plural = 'Payments'
+        ordering = ('-name',)
 
 class OrderItem(models.Model):
 
