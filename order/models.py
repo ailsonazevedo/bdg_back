@@ -35,9 +35,6 @@ class OrderItem(models.Model):
     def __str__(self):
         return '%s' % self.id
 
-    # def total(self):
-    #     return self.product.price * self.quantity
-
     class Meta:
         verbose_name = 'OrderItem'
         verbose_name_plural = 'OrderItems'
@@ -64,6 +61,19 @@ class Order(BaseModel):
     phone = models.CharField("Telefone:",max_length=100, default='')
     status = models.CharField("Status do Pedido:",max_length=1, choices=STATUS_CHOICES, blank=False, null=False, default="P")
 
+    def clean_zipcode(self):
+        data = self.cleaned_data["zipcode"]
+        data = data.replace("-", "")
+        data = data.replace(".", "")
+        return data
+
+    def clean_phone(self):
+        data = self.cleaned_data["phone"]
+        data = data.replace("(", "")
+        data = data.replace(")", "")
+        data = data.replace("-", "")
+        return data
+
     def get_status_choices(self):
         return [i[1] for i in Order._meta.get_field('status').choices if i[0] == self.status][0]
 
@@ -77,7 +87,7 @@ class Order(BaseModel):
         ordering = ['-created_at',]
     
     def __str__(self):
-        return self.address
+        return self.full_name + ' fez um pedido para '+ self.address + ',' + self.number + ' - ' + self.district
 
 
 
