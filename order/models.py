@@ -33,7 +33,7 @@ class OrderItem(models.Model):
     
 
     def __str__(self):
-        return '%s' % self.id
+        return '%s' % self.product
 
     class Meta:
         verbose_name = 'OrderItem'
