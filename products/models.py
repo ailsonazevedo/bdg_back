@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from django.db import models
 # Create your models here.
 
@@ -12,6 +13,8 @@ class BaseModel(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(default='')
+    icon = models.ImageField(upload_to='category/icon/', null=True, blank=True,
+                             verbose_name='Ícone', help_text='Recomendamos o tamanho de 64x64 pixels.')
 
     def __str__(self):
         return self.name

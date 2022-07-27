@@ -18,8 +18,20 @@ class Store (Base):
 
     def __str__(self):
         return self.name
-    def __unicode__(self):
-        return self.name
+    
+    def clean_zipcode(self):
+        data = self.cleaned_data["zipcode"]
+        data = data.replace("-", "")
+        data = data.replace(".", "")
+        return data
+
+    def clean_phone(self):
+        data = self.cleaned_data["phone"]
+        data = data.replace("(", "")
+        data = data.replace(")", "")
+        data = data.replace("-", "")
+        return data
+
     class Meta:
         db_table = 'store'
         verbose_name_plural = 'Stores'

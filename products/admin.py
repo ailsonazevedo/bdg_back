@@ -24,7 +24,7 @@ class CategoryAdmin(admin.ModelAdmin):
     ordering = ('name',)
     fieldsets = (
         ('Category', {
-            'fields': ('name',)
+            'fields': ('name','icon')
         }),
     )
     class Meta:
