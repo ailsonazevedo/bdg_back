@@ -46,7 +46,8 @@ class Order(BaseModel):
     STATUS_CHOICES = (
         ("P", "Pedido realizado"),
         ("M", "Preparando pedido"),
-        ("E", "Saiu para entrega")
+        ("E", "Saiu para entrega"),
+        ("F", "Pedido Entregue")
     )
 
     order_items = models.ManyToManyField(OrderItem)
