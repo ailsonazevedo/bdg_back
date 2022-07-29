@@ -34,6 +34,7 @@ class Products(BaseModel):
     image = models.ImageField('Imagem:', upload_to=upload_image, null=True, blank=True)
     categoria = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, related_name='categories')
     slug = models.SlugField(default='')
+    is_offer = models.BooleanField('Item em Promoção?',default=False, null=True)
     
     def __str__(self):
         return self.name
