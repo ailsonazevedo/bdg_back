@@ -9,7 +9,7 @@ class OrderItemAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('OrderItem', {
-            'fields': ('product', 'quantity', 'price')
+            'fields': ('product', 'quantity', 'price','note')
         }),
     )
     class Meta:

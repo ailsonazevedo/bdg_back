@@ -30,6 +30,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField('Quantidade:', default=1)        
     price = models.DecimalField('Preço:', max_digits=9, decimal_places=2, default=0)
     created_at = models.DateTimeField('Criação:',auto_now_add=True)
+    note = models.TextField('Observação:', max_length=255, blank=True)
     
 
     def __str__(self):
