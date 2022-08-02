@@ -3,13 +3,13 @@ from .models import Products, Category
 
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'price', 'image', 'categoria','is_offer')
-    list_filter = ('name', 'description', 'price', 'image','categoria','is_offer')
+    list_display = ('name', 'description', 'price', 'image', 'categoria','is_offer','active')
+    list_filter = ('name', 'description', 'price', 'image','categoria','is_offer','active')
     search_fields = ('name', 'description', 'price', 'image','is_offer')
     ordering = ('name', 'description', 'price', 'image')
     fieldsets = (
         ('Product', {
-            'fields': ('name', 'description', 'price', 'image','categoria','is_offer')
+            'fields': ('name', 'description', 'price', 'image','categoria','is_offer','active')
         }),
     )
     readonly_fields = ('created_at', 'updated_at')

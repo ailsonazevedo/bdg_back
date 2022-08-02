@@ -3,7 +3,7 @@ from products.models import BaseModel, Products
 # Create your models here.
 class Region(models.Model):
     name = models.CharField('Nome da Região:', max_length=80)
-    shipping_price = models.DecimalField('Preço do Frete:', max_digits=10, decimal_places=2)
+    shipping_price = models.DecimalField('Preço do Frete:', max_digits=10, decimal_places=2, null=False)
 
     class Meta:
         ordering = ['-name',]
@@ -24,15 +24,12 @@ class Payment(models.Model):
         ordering = ('-name',)
 
 class OrderItem(models.Model):
-
-    #order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Products, related_name='items', on_delete=models.CASCADE)
     quantity = models.IntegerField('Quantidade:', default=1)        
-    price = models.DecimalField('Preço:', max_digits=9, decimal_places=2, default=0)
+    price = models.DecimalField('Preço:', max_digits=9, decimal_places=2, default=0, null=False)
     created_at = models.DateTimeField('Criação:',auto_now_add=True)
-    note = models.TextField('Observação:', max_length=255, blank=True)
+    note = models.TextField('Observação:', max_length=255, blank=True, null=True)
     
-
     def __str__(self):
         return '%s' % self.product
 
@@ -43,7 +40,6 @@ class OrderItem(models.Model):
 
 class Order(BaseModel):
     #user = models.ForeignKey("account.Profile", related_name='orders', on_delete=models.CASCADE)
-
     STATUS_CHOICES = (
         ("P", "Pedido realizado"),
         ("M", "Preparando pedido"),
@@ -52,15 +48,15 @@ class Order(BaseModel):
     )
 
     order_items = models.ManyToManyField(OrderItem)
-    full_name = models.CharField("Nome completo:", max_length=256, default='')
-    address = models.CharField('Endereço:', max_length=100, default='')
+    full_name = models.CharField("Nome completo:", max_length=256, default='',null=False)
+    address = models.CharField('Endereço:', max_length=100, default='',null=False)
     zipcode = models.CharField('CEP:', max_length=100, default='')
     number = models.CharField('Número:', max_length=50, default='')
     district = models.CharField('Bairro:', max_length=100, default='')
     complement = models.CharField('Complemento:', max_length=100, null=True, blank=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE, default='')
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, default='')
-    phone = models.CharField("Telefone:",max_length=100, default='')
+    phone = models.CharField("Telefone:",max_length=100, default='',null=False)
     status = models.CharField("Status do Pedido:",max_length=1, choices=STATUS_CHOICES, blank=False, null=False, default="P")
 
     def clean_zipcode(self):
@@ -84,7 +80,7 @@ class Order(BaseModel):
             return list(self.order_items.all().values_list('id', flat=True))
         else:
             return 'NA'
-
+           
     class Meta:
         ordering = ['-created_at',]
     

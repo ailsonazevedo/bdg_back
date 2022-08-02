@@ -1,4 +1,5 @@
 from distutils.command.upload import upload
+from multiprocessing.dummy import active_children
 from django.db import models
 # Create your models here.
 
@@ -35,6 +36,7 @@ class Products(BaseModel):
     categoria = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, related_name='categories')
     slug = models.SlugField(default='')
     is_offer = models.BooleanField('Item em Promoção?',default=False, null=True)
+    active = models.BooleanField('Produto Ativo?', default=True, null=False)
     
     def __str__(self):
         return self.name
