@@ -4,11 +4,11 @@ from store.models import Store
 
 @admin.register(Store)
 class StoreAdmin(admin.ModelAdmin):
-    list_display = ('name', 'address', 'city', 'state', 'zipcode', 'phone', 'email', 'url')
-    list_filter = ('name', 'address', 'city', 'state', 'zipcode', 'phone', 'email', 'url')
-    search_fields = ('name', 'address', 'city', 'state', 'zipcode', 'phone', 'email', 'url')
+    list_display = ('name', 'address', 'city', 'state', 'zipcode', 'phone', 'email')
+    list_filter = ('name', 'address', 'city', 'state', 'zipcode', 'phone', 'email')
+    search_fields = ('name', 'address', 'city', 'state', 'zipcode', 'phone', 'email')
     ordering = ['name']
-    fields = ('name', 'logo', 'address', 'city', 'state', 'zipcode', 'phone', 'email', 'url')
+    fields = ('name', 'logo', 'address', 'city', 'state', 'zipcode', 'phone', 'email')
     readonly_fields = ('created_at', 'updated_at')
     class Meta:
         model = Store

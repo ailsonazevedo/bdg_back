@@ -21,7 +21,6 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'payment', 'phone', 'status')
     search_fields = ('full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'payment', 'phone', 'status')
 
-    
 
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):

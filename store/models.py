@@ -12,9 +12,8 @@ class Store (Base):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     zipcode = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100, help_text='Este numero será utilizado para efetuar o envio dos pedidos')
     email = models.CharField(max_length=100)
-    url = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
