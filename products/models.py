@@ -10,7 +10,7 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField('Atualização:',auto_now=True)
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField('Nome: ', max_length=100)
     icon = models.ImageField(upload_to='category/icon/', null=True, blank=True,
                              verbose_name='Ícone', help_text='Recomendamos o tamanho de 64x64 pixels.')
 
