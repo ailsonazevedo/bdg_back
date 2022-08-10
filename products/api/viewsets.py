@@ -25,3 +25,7 @@ class CategoryViewsets(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
+class OffersViwesets(viewsets.ModelViewSet):
+    queryset = Products.objects.filter(is_offer=True).order_by('updated_at')
+    serializer_class = ProductSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
