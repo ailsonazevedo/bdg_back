@@ -14,11 +14,11 @@ class RegionSerializer(serializers.ModelSerializer):
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = ['id', 'product', 'quantity', 'price', 'created_at','note']
+        fields = ['id', 'product', 'quantity', 'price', 'created_at','note','additional']
 
 class OrderSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True, read_only=True)
     class Meta:
         model = Order
-        fields = ['id', 'full_name','address', 'zipcode', 'number', 'district', 'complement', 'region', 'payment', 'phone', 'status', 'get_status_choices', 'order_items']
+        fields = ['id', 'payment', 'status', 'region', 'order_items', 'get_status_choices']
 

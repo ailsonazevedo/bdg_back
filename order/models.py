@@ -1,7 +1,7 @@
 from django.db import models
 from products.models import BaseModel, Products
 from account.models import Profile
-# Create your models here.
+
 class Region(models.Model):
     name = models.CharField('Nome da Região:', max_length=80)
     shipping_price = models.DecimalField('Preço do Frete:', max_digits=10, decimal_places=2, null=False)
