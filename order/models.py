@@ -1,6 +1,6 @@
 from django.db import models
 from products.models import BaseModel, Products
-from account.models import Profile
+
 
 class Region(models.Model):
     name = models.CharField('Nome da Região:', max_length=80)
@@ -60,12 +60,11 @@ class Order(BaseModel):
         ("E", "Saiu para entrega"),
         ("F", "Pedido Entregue")
     )
-    user = models.ForeignKey(Profile, related_name='orders', on_delete=models.CASCADE, default='')
+    user = models.ForeignKey("account.Client", related_name='orders', on_delete=models.CASCADE, default='')
     order_items = models.ManyToManyField(OrderItem)
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, default='')
     status = models.CharField("Status do Pedido:",max_length=1, choices=STATUS_CHOICES, blank=False, null=False, default="P")
-    region = models.ForeignKey(Region, on_delete=models.CASCADE, default='')
-
+    
     def clean_zipcode(self):
         data = self.cleaned_data["zipcode"]
         data = data.replace("-", "")
@@ -92,8 +91,4 @@ class Order(BaseModel):
         ordering = ['-created_at',]
     
     def __str__(self):
-        return self.full_name + ' fez um pedido para '+ self.address + ',' + self.number + ' - ' + self.district
-
-
-
-
+        return '%s' % self.user + 'fez um pedido!'
