@@ -46,8 +46,6 @@ class ClientSerializer(serializers.ModelSerializer):
 
 class UpdateClientSerializer(serializers.ModelSerializer):
     address = AddressSerializer(read_only=True)
-    # terms_and_conditions = serializers.BooleanField(allow_null=True)
-
     class Meta:
         model = Client
         fields = [
@@ -58,3 +56,17 @@ class UpdateClientSerializer(serializers.ModelSerializer):
             "address",
         ]
 
+class UpdateAddressSerializer(serializers.ModelSerializer):
+    client = ClientSerializer(read_only=True)
+    class Meta:
+        model = Address
+        fields = [
+            "id",
+            "client",
+            "street",
+            "number",
+            "complement",
+            "district",
+            "zipcode",
+            "region",
+        ]
