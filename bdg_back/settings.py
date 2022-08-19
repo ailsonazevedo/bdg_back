@@ -32,24 +32,31 @@ ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
-INSTALLED_APPS = [
+MY_APPS = [
+    'products',
+    'order',
+    'account',
+    'store',
+]
+
+OUTHERS_APPS = [
+    'rest_framework',
+    'rest_framework_swagger',
+    'drf_yasg',
+    'corsheaders',
+    'rest_framework_simplejwt',
+]
+
+INTERNAL_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework_swagger',
-    'drf_yasg',
-    'corsheaders',
-    'rest_framework_simplejwt',
-
-    'products',
-    'order',
-    'account',
-    'store',
 ]
+INSTALLED_APPS = INTERNAL_APPS + MY_APPS + OUTHERS_APPS
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -141,6 +148,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+DATE_FORMAT = "%d/%m/%Y"
+DATETIME_FORMAT = "%d/%m/%Y %H:%M"
+DATE_INPUT_FORMATS = ['%d/%m/%Y']
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -154,9 +165,11 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=2),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
+    'SIGNING_KEY': SECRET_KEY,
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 # Static files (CSS, JavaScript, Images)
