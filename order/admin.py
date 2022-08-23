@@ -17,7 +17,7 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('payment', 'status','region', 'get_order_items')
+    list_display = ('user','payment', 'status', 'get_order_items')
     list_filter = ( 'payment', 'status')
     search_fields = ( 'payment', 'status') 
 
