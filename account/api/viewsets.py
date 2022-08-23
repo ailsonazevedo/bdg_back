@@ -3,14 +3,18 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from account.api.serializers import AddressSerializer, ClientSerializer, UpdateAddressSerializer, UpdateClientSerializer
 from django.contrib.auth.models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from account.models import Address, Client
 
+# List all clients 
 class ClientListViewSets(generics.ListAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAdminUser,)
 
+# Create a new client
 class ClientCreateViewSets(generics.CreateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
@@ -41,13 +45,13 @@ class ClientCreateViewSets(generics.CreateAPIView):
                 region=serializer.validated_data['region']
             )
             client.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, {"message": "Successfully created user!"},status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ClientRetrieveViewSets(generics.RetrieveAPIView):
     serializer_class = ClientSerializer
     queryset = Client.objects.all()
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def retrieve(self, request, *args, **kwargs):
         pk = kwargs.get('pk')
@@ -71,7 +75,7 @@ class ClientRetrieveViewSets(generics.RetrieveAPIView):
 class ClientRetrieveUpdateViewSets(generics.RetrieveUpdateAPIView):
     serializer_class = ClientSerializer
     queryset = Client.objects.all()
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_object(self):
         pk = self.kwargs.get('pk')
@@ -94,7 +98,7 @@ class ClientRetrieveUpdateViewSets(generics.RetrieveUpdateAPIView):
 class ClientDeleteViewSets(generics.DestroyAPIView):
     serializer_class = ClientSerializer
     queryset = Client.objects.all()
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_object(self):
         pk = self.kwargs.get('pk')
@@ -108,12 +112,12 @@ class ClientDeleteViewSets(generics.DestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         client = self.get_object()
         client.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "Successfully delete user!"},status=status.HTTP_204_NO_CONTENT)
 
 class AddressRetrieveUpdateViewSets(generics.RetrieveUpdateAPIView):
     serializer_class = AddressSerializer
     queryset = Address.objects.all()
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_object(self):
         pk = self.kwargs.get('pk')
@@ -132,3 +136,28 @@ class AddressRetrieveUpdateViewSets(generics.RetrieveUpdateAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        return token
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+
+        data["refresh"] = str(refresh)
+        data["access"] = str(refresh.access_token)
+        try:
+            client = Client.objects.get(user=self.user)
+            data["client_id"] = client.id
+        except Exception as e:
+            client = Client.objects.create(user=self.user, full_name=self.user.username)
+            data["client_id"] = client.id
+
+        return data
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer

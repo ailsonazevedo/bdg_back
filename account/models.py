@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 from order.models import Region
 
 class Address(models.Model):
-    street = models.CharField('Rua:', max_length=100, default='',null=False)
+    name = models.CharField('Nome do endereço:',max_length=100, null=True, blank=True)
+    street = models.CharField('Rua:', max_length=100, default='',null=True, blank=True)
     zipcode = models.CharField('CEP:', max_length=100, default='',null=True)
-    number = models.CharField('Número:', max_length=50, default='')
-    district = models.CharField('Bairro:', max_length=100, default='')
+    number = models.CharField('Número:', max_length=50, default='',null=True, blank=True)
+    district = models.CharField('Bairro:', max_length=100, default='',null=True, blank=True)
     complement = models.CharField('Complemento:', max_length=100, null=True, blank=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE, default=None)
 
@@ -23,7 +24,6 @@ class Client(models.Model):
     full_name = models.CharField("Nome completo:", max_length=256, default='',null=False)
     phone = models.CharField("Telefone:",max_length=100, default='',null=False)
     address = models.ForeignKey(Address, verbose_name="Endereço", on_delete=models.CASCADE, default=None,related_name="address")
-
 
     def __str__(self):
         return self.full_name

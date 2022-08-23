@@ -16,13 +16,13 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('id','street', 'number', 'complement', 'district', 'zipcode', 'region')
+    list_display = ('id','name','street', 'number', 'complement', 'district', 'zipcode', 'region')
     list_filter = ('street', 'number', 'complement', 'district', 'zipcode', 'region')
     search_fields = ('street', 'number', 'complement', 'district', 'zipcode', 'region')
 
     fieldsets = (
         ('Address', {
-            'fields': ('street', 'number', 'complement', 'district', 'zipcode', 'region')
+            'fields': ('name','street', 'number', 'complement', 'district', 'zipcode', 'region')
         }),
     )
     class Meta:
