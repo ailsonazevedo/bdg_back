@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 
 from account.models import Address, Client
 
+from order.api.serializers import OrderSerializer
+
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,6 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ClientSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     address = AddressSerializer(required=False, allow_null=True)
+    orders = OrderSerializer(read_only=True, required=False, allow_null=True, many=True)
 
     class Meta:
         model = Client
@@ -37,6 +40,7 @@ class ClientSerializer(serializers.ModelSerializer):
             'email',
             'phone',
             'address',
+            'orders',
             'user'
         ]
     def create(self, validated_data):

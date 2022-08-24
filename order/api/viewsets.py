@@ -7,25 +7,26 @@ from .serializers import *
 
 from rest_framework import status
 from rest_framework import viewsets, permissions
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+# from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
 class OrderViewsets(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 class OrderItemViewsets(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
-    
+    permission_classes = (permissions.IsAuthenticated,)
 
 class PaymentViewsets(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 class RegionViewsets(viewsets.ModelViewSet):
     queryset = Region.objects.all()
     serializer_class = RegionSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
