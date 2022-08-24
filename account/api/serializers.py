@@ -7,7 +7,16 @@ from account.models import Address, Client
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = "__all__"
+        fields = [
+            'user',
+            'name',
+            'street',
+            'number',
+            'complement',
+            'district',
+            'zipcode',
+            'region',
+        ]
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
