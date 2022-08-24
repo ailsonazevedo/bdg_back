@@ -7,16 +7,7 @@ from account.models import Address, Client
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = [
-            'id',
-            'name',
-            'street',
-            'number',
-            'complement',
-            'district',
-            'zipcode',
-            'region'
-        ]
+        fields = "__all__"
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ClientSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    address = AddressSerializer(read_only=False)
+    address = AddressSerializer(required=False, allow_null=True)
 
     class Meta:
         model = Client
@@ -58,17 +49,3 @@ class UpdateClientSerializer(serializers.ModelSerializer):
             "address",
         ]
 
-class UpdateAddressSerializer(serializers.ModelSerializer):
-    client = ClientSerializer(read_only=True)
-    class Meta:
-        model = Address
-        fields = [
-            "id",
-            "client",
-            "street",
-            "number",
-            "complement",
-            "district",
-            "zipcode",
-            "region",
-        ]
