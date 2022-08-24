@@ -1,7 +1,7 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from account.api.serializers import AddressSerializer, ClientSerializer, UpdateAddressSerializer, UpdateClientSerializer
+from account.api.serializers import AddressSerializer, ClientSerializer, UpdateClientSerializer
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -41,11 +41,26 @@ class ClientCreateViewSets(generics.CreateAPIView):
                 full_name=serializer.validated_data['full_name'],
                 phone=serializer.validated_data['phone'],
                 email=serializer.validated_data['email'],
-                address=serializer.validated_data['address'],
-                region=serializer.validated_data['region']
+                # address=serializer.validated_data['address'],
+                # region=serializer.validated_data['region']
             )
             client.save()
-            return Response(serializer.data, {"message": "Successfully created user!"},status=status.HTTP_201_CREATED)
+            try:
+                address = Address(
+                    name=serializer.validated_data['address']['name'],
+                    street=serializer.validated_data['address']['street'],
+                    number=serializer.validated_data['address']['number'],
+                    complement=serializer.validated_data['address']['complement'],
+                    district=serializer.validated_data['address']['district'],
+                    zipcode=serializer.validated_data['address']['zipcode'],
+                    region=serializer.validated_data['address']['region'],
+                    client=client
+                )
+                address.save()
+            except Exception:
+                pass
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ClientRetrieveViewSets(generics.RetrieveAPIView):
@@ -90,7 +105,9 @@ class ClientRetrieveUpdateViewSets(generics.RetrieveUpdateAPIView):
         client = self.get_object()
 
         serializer = UpdateClientSerializer(client, data=request.data, partial=True)
+        
         if serializer.is_valid():
+            print(serializer.validated_data)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -114,28 +131,10 @@ class ClientDeleteViewSets(generics.DestroyAPIView):
         client.delete()
         return Response({"message": "Successfully delete user!"},status=status.HTTP_204_NO_CONTENT)
 
-class AddressRetrieveUpdateViewSets(generics.RetrieveUpdateAPIView):
+class AddressViewSets(viewsets.ModelViewSet):
     serializer_class = AddressSerializer
     queryset = Address.objects.all()
     permission_classes = (permissions.IsAuthenticated,)
-
-    def get_object(self):
-        pk = self.kwargs.get('pk')
-        obj = get_object_or_404(
-            self.get_queryset(),
-            pk=pk
-        )
-        self.check_object_permissions(self.request, obj)
-        return obj
-
-    def update(self, request, *args, **kwargs):
-        address = self.get_object()
-
-        serializer = UpdateAddressSerializer(address, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod

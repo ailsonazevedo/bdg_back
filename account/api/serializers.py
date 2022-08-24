@@ -8,14 +8,14 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = [
-            'id',
+            'user',
             'name',
             'street',
             'number',
             'complement',
             'district',
             'zipcode',
-            'region'
+            'region',
         ]
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ClientSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    address = AddressSerializer(read_only=False)
+    address = AddressSerializer(required=False, allow_null=True)
 
     class Meta:
         model = Client
@@ -58,17 +58,3 @@ class UpdateClientSerializer(serializers.ModelSerializer):
             "address",
         ]
 
-class UpdateAddressSerializer(serializers.ModelSerializer):
-    client = ClientSerializer(read_only=True)
-    class Meta:
-        model = Address
-        fields = [
-            "id",
-            "client",
-            "street",
-            "number",
-            "complement",
-            "district",
-            "zipcode",
-            "region",
-        ]

@@ -1,12 +1,20 @@
-from account.api.viewsets import (
-    AddressRetrieveUpdateViewSets, 
+from account.api.viewsets import ( 
     ClientDeleteViewSets, 
     ClientListViewSets, 
     ClientCreateViewSets, 
     ClientRetrieveUpdateViewSets, 
-    ClientRetrieveViewSets
+    ClientRetrieveViewSets,
+    AddressViewSets,
 )
 from django.urls import path
+
+from rest_framework import urlpatterns
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+
+router.register(r'address', AddressViewSets)
+
 
 urlpatterns =[
     path('clients/', ClientListViewSets.as_view(), name='client_list'),
@@ -14,5 +22,6 @@ urlpatterns =[
     path('create-account-client', ClientCreateViewSets.as_view(), name='accounts_create'),
     path('update-account-client/<int:pk>', ClientRetrieveUpdateViewSets.as_view(), name='accounts_update'),
     path('delete-account-client/<int:pk>', ClientDeleteViewSets.as_view(), name='accounts_destroy'),
-    path('update-address-client/<int:pk>', AddressRetrieveUpdateViewSets.as_view(), name='address_update'),
 ]
+
+urlpatterns += router.urls
