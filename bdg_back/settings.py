@@ -43,6 +43,7 @@ OUTHERS_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'drf_yasg',
+    'drf_spectacular',
     'corsheaders',
     'rest_framework_simplejwt',
 ]
@@ -160,7 +161,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
@@ -170,6 +172,31 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': False,
     'SIGNING_KEY': SECRET_KEY,
     'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
+SWAGGER_SETTINGS = {
+   'SECURITY_DEFINITIONS': {
+      'Basic': {
+            'type': 'basic'
+      },
+      'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+      }
+   }
+}
+
+REDOC_SETTINGS = {
+   'LAZY_RENDERING': False,
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'BDG API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # 'SERVE_PERMISSIONS': ['rest_framework.permissions.IsAdminUser'],
 }
 
 # Static files (CSS, JavaScript, Images)

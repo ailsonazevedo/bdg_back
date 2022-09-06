@@ -85,6 +85,11 @@ class ClientRetrieveViewSets(generics.RetrieveAPIView):
         return Response(
             serializer.data,
         )
+    
+    def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Client.objects.none()
+
 
 
 class ClientRetrieveUpdateViewSets(generics.RetrieveUpdateAPIView):
@@ -135,6 +140,11 @@ class AddressViewSets(viewsets.ModelViewSet):
     serializer_class = AddressSerializer
     queryset = Address.objects.all()
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Address.objects.none()
+
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
