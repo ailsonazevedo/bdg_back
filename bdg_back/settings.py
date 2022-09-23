@@ -219,12 +219,12 @@ SPECTACULAR_SETTINGS = {
 }
 
 JAZZMIN_SETTINGS = {
-    "site_title": "Hamburgueria BDG",
+    "site_title": "BDG",
     "site_header": "BDG",
     "site_brand": "Burger",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "/media/store/logo/MICE2021.png",
+    "site_logo": "store/logo/MICE2021.png",
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
     "login_logo": None,
@@ -267,7 +267,7 @@ JAZZMIN_SETTINGS = {
         {"model": "auth.User"},
 
         # App with dropdown menu to all its models pages (Permissions checked against models)
-        {"app": "books"},
+        {"app": "order"},
     ],
 
     #############
@@ -297,7 +297,7 @@ JAZZMIN_SETTINGS = {
     "hide_models": [],
 
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
+    "order_with_respect_to": ["auth","admin","store","account","products","order"],
 
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
@@ -315,6 +315,23 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
+
+        "admin.LogEntry": "fas fa-history",
+
+        "store": "fas fa-store",
+        "store.Store": "fas fa-store",
+
+        "account.Address": "fas fa-address-book",
+        "account.Client": "fas fa-user-friends",
+
+        "products.Category": "fas fa-tags",
+        "products.Products": "fas fa-hamburger",
+
+        "order.Additional": "fas fa-bacon", 
+        "order.OrderItem": "fas fa-cart-plus",
+        "order.Order": "fas fa-shopping-cart",
+        "order.Payment": "fas fa-wallet",
+        "order.Region": "fas fa-search-location",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
@@ -333,7 +350,7 @@ JAZZMIN_SETTINGS = {
     "custom_css": None,
     "custom_js": None,
     # Whether to show the UI customizer on the sidebar
-    "show_ui_builder": False,
+    "show_ui_builder": True,
 
     ###############
     # Change view #
@@ -346,16 +363,19 @@ JAZZMIN_SETTINGS = {
     # - carousel
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
-    
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},    
 }
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+# STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_URL = '/media/'
