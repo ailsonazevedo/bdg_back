@@ -41,8 +41,6 @@ class ClientCreateViewSets(generics.CreateAPIView):
                 full_name=serializer.validated_data['full_name'],
                 phone=serializer.validated_data['phone'],
                 email=serializer.validated_data['email'],
-                # address=serializer.validated_data['address'],
-                # region=serializer.validated_data['region']
             )
             client.save()
             try:

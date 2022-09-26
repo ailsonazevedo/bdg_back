@@ -1,6 +1,6 @@
 from django.db import router
 from rest_framework import urlpatterns
-from .api.viewsets import *
+from .api.viewsets import ProductsViewsets, CategoryViewsets, OffersViwesets
 from rest_framework.routers import DefaultRouter
 
 

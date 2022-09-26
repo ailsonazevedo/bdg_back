@@ -25,11 +25,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/v1/', include('apps.products.urls')),
-    path('api/v1/', include('apps.order.urls')),
-    path('api/v1/', include('apps.store.urls')),
-    path('api/v1/', include('apps.account.urls')),
-    path('auth/', include('rest_framework.urls')),
+    path('api/v1/', include('apps.products.urls'), name='products'),
+    path('api/v1/', include('apps.order.urls'), name='orders'),
+    path('api/v1/', include('apps.store.urls'), name='stores'),
+    path('api/v1/', include('apps.account.urls'), name='accounts'),
+    path('auth/', include('rest_framework.urls'), name='rest_framework'),
 
     # Swagger urls
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

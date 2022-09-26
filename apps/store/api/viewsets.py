@@ -2,8 +2,8 @@ from collections import _OrderedDictItemsView
 from typing import OrderedDict
 from django.http import response
 from rest_framework.exceptions import NotFound
-from ..models import *
-from .serializers import *
+from ..models import Store
+from .serializers import StoreSerializer
 
 from rest_framework import status
 from rest_framework import viewsets, permissions
