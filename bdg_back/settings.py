@@ -33,10 +33,10 @@ ALLOWED_HOSTS = ['127.0.0.1']
 # Application definition
 
 MY_APPS = [
-    'products',
-    'order',
-    'account',
-    'store',
+    'apps.products',
+    'apps.order',
+    'apps.account',
+    'apps.store',
 ]
 
 OUTHERS_APPS = [
@@ -214,8 +214,6 @@ SPECTACULAR_SETTINGS = {
     'SCHEMA_EXTRA_SECURITY': [],
     'SCHEMA_EXTRA_PROPERTIES': {},
     'SCHEMA_EXTRA_PARAMETERS': {},
-    'SCHEMA_EXTRA_REQUEST_FIELDS': {},
-    'SCHEMA_EXTRA_RESPONSE_FIELDS': {},
 }
 
 JAZZMIN_SETTINGS = {

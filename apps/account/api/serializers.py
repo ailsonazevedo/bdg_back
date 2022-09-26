@@ -1,9 +1,9 @@
 from rest_framework import permissions, serializers, status
 from django.contrib.auth.models import User
 
-from account.models import Address, Client
+from apps.account.models import Address, Client
 
-from order.api.serializers import OrderSerializer
+from apps.order.api.serializers import OrderSerializer
 
 
 class AddressSerializer(serializers.ModelSerializer):

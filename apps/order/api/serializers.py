@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from ..models import Order, OrderItem, Payment, Region
-from products.api.serializers import ProductSerializer
+from apps.products.api.serializers import ProductSerializer
 
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:

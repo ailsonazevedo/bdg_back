@@ -8,3 +8,5 @@ __pycache__
 /__pycache__
 /.env
 __pycache__
+bdg_back/__pycache__/settings.cpython-310.pyc
+bdg_back/__pycache__/urls.cpython-310.pyc

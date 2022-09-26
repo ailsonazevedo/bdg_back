@@ -1,13 +1,12 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from account.api.viewsets import MyTokenObtainPairView
+from apps.account.api.viewsets import MyTokenObtainPairView
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 from django.urls import (
     path, 
     include, 
-    re_path,
 )
 
 from rest_framework import permissions
@@ -26,10 +25,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/v1/', include('products.urls')),
-    path('api/v1/', include('order.urls')),
-    path('api/v1/', include('store.urls')),
-    path('api/v1/', include('account.urls')),
+    path('api/v1/', include('apps.products.urls')),
+    path('api/v1/', include('apps.order.urls')),
+    path('api/v1/', include('apps.store.urls')),
+    path('api/v1/', include('apps.account.urls')),
     path('auth/', include('rest_framework.urls')),
 
     # Swagger urls
