@@ -50,9 +50,10 @@ Describe your project
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: Add Products;\
-:heavy_check_mark: Feature 2;\
-:heavy_check_mark: Feature 3;
+:heavy_check_mark: Create Products\
+:heavy_check_mark: Add Product in Cart\
+:heavy_check_mark: Create Order\
+:heavy_check_mark: Create Account
 
 ## :rocket: Technologies ##
 
