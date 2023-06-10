@@ -96,6 +96,9 @@ $ python manage.py createsuperuser
 $ py manage.py runserver
 
 # The server will initialize in the <http://127.0.0.1:8000/>
+
+# Acess endpoints
+$ http://127.0.0.1:8000/api/schema/
 ```
 
 ## :memo: License ##
